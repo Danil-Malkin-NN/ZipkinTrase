@@ -4,8 +4,14 @@ spring:
   application:
     name: ServiceB
 
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health, prometheus, liveness, readiness, mappings
+
 feign:
-  url: "localhost:8082"
+  url: "localhost:8083"
   client:
     config:
       feignName:

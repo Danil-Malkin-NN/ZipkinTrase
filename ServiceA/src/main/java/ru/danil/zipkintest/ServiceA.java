@@ -5,7 +5,6 @@ import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.cloud.openfeign.EnableFeignClients;
 import org.springframework.context.annotation.ComponentScan;
 
-//@ComponentScan({"ru.danil.api", "ru.danil.zipkintest"})
 @EnableFeignClients
 @SpringBootApplication
 public class ServiceA {

@@ -1,14 +1,8 @@
 server:
-  port: 8081
+  port: 8083
 spring:
   application:
-    name: ServiceA
-  zipkin:
-    base-url: http://127.0.0.1:9411
-    enabled: true
-  sleuth:
-    sampler:
-      rate: 1.0  # 1.0 означает, что все запросы будут трассироваться
+    name: ServiceC
 
 management:
   endpoints:
@@ -17,7 +11,7 @@ management:
         include: health, prometheus, liveness, readiness, mappings
 
 feign:
-  url: "localhost:8082"
+  url: "localhost:8083"
   client:
     config:
       feignName:

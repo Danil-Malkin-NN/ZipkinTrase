@@ -19,6 +19,6 @@ public class SimpleController {
 
     @GetMapping
     public String getName() {
-        return name + " " + simpleApi.getName();
+        return name;
     }
 }
