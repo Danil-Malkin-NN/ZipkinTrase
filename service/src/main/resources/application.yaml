@@ -1,14 +1,8 @@
 server:
-  port: 8081
+  port: ${PORT:8080}
 spring:
   application:
-    name: AAAAAA
-#  zipkin:
-#    base-url: http://127.0.0.1:9411
-#    enabled: true
-#  sleuth:
-#    sampler:
-#      rate: 1  # 1.0 означает, что все запросы будут трассироваться
+    name: ${NAME:SERVICE}
 
 management:
   tracing:
@@ -21,7 +15,7 @@ management:
       span-joining-supported: true
   zipkin:
     tracing:
-      endpoint: http://localhost:9411/api/v2/spans
+      endpoint: ${ZIPKIN_URL:http://localhost:9411}/api/v2/spans
   endpoints:
     web:
       exposure:
@@ -35,7 +29,7 @@ logging:
     root: debug
 
 feign:
-  url: "localhost:8082"
+  url: ${NEXT_SERVICE}
   client:
     config:
       feignName:

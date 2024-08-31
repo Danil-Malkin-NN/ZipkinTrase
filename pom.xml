@@ -17,10 +17,7 @@
     <packaging>pom</packaging>
 
     <modules>
-        <module>ServiceA</module>
-        <module>ServiceB</module>
-        <module>ServiceC</module>
-        <module>api</module>
+        <module>service</module>
     </modules>
 
 
@@ -104,6 +101,7 @@
             <plugin>
                 <groupId>org.springframework.boot</groupId>
                 <artifactId>spring-boot-maven-plugin</artifactId>
+                <version>3.3.3</version>
                 <configuration>
                     <excludes>
                         <exclude>
@@ -111,21 +109,6 @@
                             <artifactId>lombok</artifactId>
                         </exclude>
                     </excludes>
-                </configuration>
-            </plugin>
-            <plugin>
-                <groupId>org.apache.maven.plugins</groupId>
-                <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.11.0</version>
-                <configuration>
-                    <source>21</source>
-                    <target>21</target>
-                    <annotationProcessorPaths>
-                        <path>
-                            <groupId>org.projectlombok</groupId>
-                            <artifactId>lombok</artifactId>
-                        </path>
-                    </annotationProcessorPaths>
                 </configuration>
             </plugin>
         </plugins>
