@@ -1,0 +1,42 @@
+version: 2.29.2
+services:
+  firs:
+    image: docker.io/library/service:0.0.2-CASHE
+    environment:
+      PORT: 8081
+      NAME: firs
+      NEXT_SERVICE: http://second:8082
+      ZIPKIN_URL: http://zipkin:9411
+    ports:
+      - 8081:8081
+    depends_on:
+      - second
+
+  second:
+    image: docker.io/library/service:0.0.2-CASHE
+    environment:
+      PORT: 8082
+      NAME: second
+      NEXT_SERVICE: http://third:8083
+      ZIPKIN_URL: http://zipkin:9411
+    ports:
+      - 8082:8082
+    depends_on:
+      - third
+
+  third:
+    image: docker.io/library/service:0.0.2-CASHE
+    environment:
+      PORT: 8083
+      NAME: third
+      NEXT_SERVICE: false
+      ZIPKIN_URL: http://zipkin:9411
+    ports:
+      - 8083:8083
+    depends_on:
+      - zipkin
+  zipkin:
+    image: openzipkin/zipkin-slim
+    ports:
+      - 9411:9411
+
