@@ -3,6 +3,10 @@ server:
 spring:
   application:
     name: ${NAME:SERVICE}
+  kafka:
+    bootstrap-servers: ${KAFKA_URL}
+    consumer:
+      group-id: ${NAME:SERVICE}
 
 management:
   tracing:
@@ -26,10 +30,15 @@ logging:
     correlation: "[${spring.application.name:},%X{traceId:-},%X{spanId:-}] "
   include-application-name: false
   level:
-    root: debug
+    root: info
+
+kafka:
+  in: ${KAFKA_IN:zip_test}
+  out: ${KAFKA_OUT:zip_test2}
+
 
 feign:
-  url: ${NEXT_SERVICE}
+  url: ${NEXT_SERVICE:false}
   client:
     config:
       feignName:

@@ -1,36 +1,45 @@
 version: 2.29.2
 services:
   firs:
-    image: docker.io/library/service:0.0.1-SNAPSHOT
+    image: docker.io/library/service:0.0.3-KAFKA
     environment:
       PORT: 8081
       NAME: firs
       NEXT_SERVICE: http://second:8082
       ZIPKIN_URL: http://zipkin:9411
+      KAFKA_URL: http://kafka:29092
+      KAFKA_IN: void2
+      KAFKA_OUT: zip_test_second
     ports:
       - 8081:8081
     depends_on:
       - second
 
   second:
-    image: docker.io/library/service:0.0.1-SNAPSHOT
+    image: docker.io/library/service:0.0.3-KAFKA
     environment:
       PORT: 8082
       NAME: second
       NEXT_SERVICE: http://third:8083
       ZIPKIN_URL: http://zipkin:9411
+      KAFKA_URL: http://kafka:29092
+      KAFKA_IN: zip_test_second
+      KAFKA_OUT: zip_test_third
     ports:
       - 8082:8082
     depends_on:
       - third
 
   third:
-    image: docker.io/library/service:0.0.1-SNAPSHOT
+    image: docker.io/library/service:0.0.3-KAFKA
     environment:
       PORT: 8083
       NAME: third
       NEXT_SERVICE: false
       ZIPKIN_URL: http://zipkin:9411
+      KAFKA_URL: http://kafka:29092
+      KAFKA_IN: zip_test_third
+      KAFKA_OUT: void
     ports:
       - 8083:8083
     depends_on:
@@ -40,3 +49,24 @@ services:
     ports:
       - 9411:9411
 
+  zookeeper:
+    image: confluentinc/cp-zookeeper:7.4.4
+    environment:
+      ZOOKEEPER_CLIENT_PORT: 2181
+      ZOOKEEPER_TICK_TIME: 2000
+    ports:
+      - 22181:2181
+
+  kafka:
+    image: confluentinc/cp-kafka:7.4.4
+    depends_on:
+      - zookeeper
+    ports:
+      - 29092:29092
+    environment:
+      KAFKA_BROKER_ID: 1
+      KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
+      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
+      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
+      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1

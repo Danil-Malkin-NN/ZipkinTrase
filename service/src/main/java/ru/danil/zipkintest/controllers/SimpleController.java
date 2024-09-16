@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Value;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RestController;
 import ru.danil.zipkintest.feign.SimpleApi;
+import ru.danil.zipkintest.kafka.produser.KafkaSimpleProduser;
 
 import java.util.Optional;
 
@@ -16,8 +17,12 @@ public class SimpleController {
     private final Optional<SimpleApi> simpleApi;
     private final String name;
 
+    private final Optional<KafkaSimpleProduser> kafkaSimpleProduser;
+
     public SimpleController(@Autowired(required = false) SimpleApi simpleApi,
-                            @Value("${spring.application.name}") String name) {
+                            @Value("${spring.application.name}") String name,
+                            @Autowired(required = false) KafkaSimpleProduser kafkaSimpleProduser) {
+        this.kafkaSimpleProduser = Optional.ofNullable(kafkaSimpleProduser);
         if (simpleApi == null) {
             log.warn("Фейн для внешнего клиента не найден");
         }
@@ -25,10 +30,12 @@ public class SimpleController {
         this.name = name;
     }
 
-
     @GetMapping("")
     public String getName() {
-        return name + " " + simpleApi.map(SimpleApi::getName)
+        final String endWebRequesting = name + " " + simpleApi.map(SimpleApi::getName)
                 .orElse("end");
+
+        kafkaSimpleProduser.ifPresent(KafkaSimpleProduser::sendMessage);
+        return endWebRequesting;
     }
 }
