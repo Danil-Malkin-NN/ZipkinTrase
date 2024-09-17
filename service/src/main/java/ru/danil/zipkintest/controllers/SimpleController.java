@@ -30,7 +30,7 @@ public class SimpleController {
         this.name = name;
     }
 
-    @GetMapping("")
+    @GetMapping("name")
     public String getName() {
         final String endWebRequesting = name + " " + simpleApi.map(SimpleApi::getName)
                 .orElse("end");
