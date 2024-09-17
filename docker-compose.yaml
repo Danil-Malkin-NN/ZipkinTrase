@@ -7,7 +7,7 @@ services:
       NAME: firs
       NEXT_SERVICE: http://second:8082
       ZIPKIN_URL: http://zipkin:9411
-      KAFKA_URL: http://kafka:29092
+      KAFKA_URL: http://kafka:9092
       KAFKA_IN: void2
       KAFKA_OUT: zip_test_second
     ports:
@@ -22,7 +22,7 @@ services:
       NAME: second
       NEXT_SERVICE: http://third:8083
       ZIPKIN_URL: http://zipkin:9411
-      KAFKA_URL: http://kafka:29092
+      KAFKA_URL: http://kafka:9092
       KAFKA_IN: zip_test_second
       KAFKA_OUT: zip_test_third
     ports:
@@ -37,36 +37,34 @@ services:
       NAME: third
       NEXT_SERVICE: false
       ZIPKIN_URL: http://zipkin:9411
-      KAFKA_URL: http://kafka:29092
+      KAFKA_URL: http://kafka:9092
       KAFKA_IN: zip_test_third
       KAFKA_OUT: void
     ports:
       - 8083:8083
     depends_on:
       - zipkin
+
   zipkin:
     image: openzipkin/zipkin-slim
     ports:
       - 9411:9411
 
   zookeeper:
-    image: confluentinc/cp-zookeeper:7.4.4
-    environment:
-      ZOOKEEPER_CLIENT_PORT: 2181
-      ZOOKEEPER_TICK_TIME: 2000
+    image: wurstmeister/zookeeper
+    container_name: zookeeper
     ports:
-      - 22181:2181
+      - "2181:2181"
 
   kafka:
-    image: confluentinc/cp-kafka:7.4.4
-    depends_on:
-      - zookeeper
+    image: wurstmeister/kafka
+    container_name: kafka
     ports:
-      - 29092:29092
+      - "9092:9092"
     environment:
-      KAFKA_BROKER_ID: 1
+      KAFKA_ADVERTISED_LISTENERS: INSIDE://kafka:9092,OUTSIDE://localhost:9093
+      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: INSIDE:PLAINTEXT,OUTSIDE:PLAINTEXT
+      KAFKA_LISTENERS: INSIDE://0.0.0.0:9092,OUTSIDE://0.0.0.0:9093
+      KAFKA_INTER_BROKER_LISTENER_NAME: INSIDE
       KAFKA_ZOOKEEPER_CONNECT: zookeeper:2181
-      KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://kafka:9092
-      KAFKA_LISTENER_SECURITY_PROTOCOL_MAP: PLAINTEXT:PLAINTEXT,PLAINTEXT_HOST:PLAINTEXT
-      KAFKA_INTER_BROKER_LISTENER_NAME: PLAINTEXT
-      KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
+      KAFKA_CREATE_TOPICS: "baeldung:1:1"
