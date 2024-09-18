@@ -1,0 +1,18 @@
+@startuml
+'https://plantuml.com/sequence-diagram
+
+autonumber
+
+actor USER
+
+USER -> service_A: GET http://service_B:8081/name
+service_A -> service_B: GET http://service_B:8082/name
+service_B --> service_C: GET http://service_B:8083/name
+
+service_C -> kafka :
+
+service_B <-- service_C: GET http://service_B:8083/name
+service_A <-- service_B: GET http://service_B:8082/name
+USER <-- service_A: GET http://service_B:8081/name
+
+@enduml
