@@ -1,4 +1,4 @@
-version: 2.29.2
+version: "2.29.2"
 services:
   firs:
     image: docker.io/library/service:0.0.1-SNAPSHOT

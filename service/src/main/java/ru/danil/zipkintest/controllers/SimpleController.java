@@ -19,7 +19,7 @@ public class SimpleController {
     public SimpleController(@Autowired(required = false) SimpleApi simpleApi,
                             @Value("${spring.application.name}") String name) {
         if (simpleApi == null) {
-            log.warn("Фейн для внешнего клиента не найден");
+            log.warn("Feign для внешнего клиента не найден");
         }
         this.simpleApi = Optional.ofNullable(simpleApi);
         this.name = name;
