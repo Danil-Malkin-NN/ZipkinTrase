@@ -8,7 +8,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 @FeignClient(value = "zipkinValue", url = "${feign.url}")
 public interface SimpleApi {
 
-    @GetMapping(name = "name")
+    @GetMapping("name")
     String getName();
 
 }
