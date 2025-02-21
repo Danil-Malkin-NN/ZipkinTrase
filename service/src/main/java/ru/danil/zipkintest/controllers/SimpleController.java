@@ -28,6 +28,10 @@ public class SimpleController {
 
     @GetMapping("name")
     public String getName() {
+        if(name.equals("third")){
+            throw new RuntimeException("Сервис сломался, мне вас жаль)");
+        }
+
         return name + " " + simpleApi.map(SimpleApi::getName)
                 .orElse("end");
     }

@@ -1,7 +1,7 @@
 version: "2.29.2"
 services:
   firs:
-    image: docker.io/library/service:0.0.1-SNAPSHOT
+    image: docker.io/library/service:0.0.1-falt
     environment:
       PORT: 8081
       NAME: firs
@@ -13,7 +13,7 @@ services:
       - second
 
   second:
-    image: docker.io/library/service:0.0.1-SNAPSHOT
+    image: docker.io/library/service:0.0.1-falt
     environment:
       PORT: 8082
       NAME: second
@@ -25,7 +25,7 @@ services:
       - third
 
   third:
-    image: docker.io/library/service:0.0.1-SNAPSHOT
+    image: docker.io/library/service:0.0.1-falt
     environment:
       PORT: 8083
       NAME: third

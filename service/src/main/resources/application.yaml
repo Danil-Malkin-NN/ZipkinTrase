@@ -29,7 +29,7 @@ logging:
     root: debug
 
 feign:
-  url: ${NEXT_SERVICE}
+  url: ${NEXT_SERVICE:http://localhost:80}
   client:
     config:
       feignName:
