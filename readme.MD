@@ -12,5 +12,12 @@ mvn spring-boot:build-image
 ````
 
 ````shell
-docker-compose -f docker-compose-cashe.yaml up
+docker compose up -f docker-compose.yaml
 ````
+Первоначальный рест
+http://localhost:8081/name
+
+Zipkin 
+http://localhost:9411/
+
+
