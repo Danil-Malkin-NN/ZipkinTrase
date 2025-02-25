@@ -7,8 +7,8 @@ docker run -d -p 9411:9411 openzipkin/zipkin-slim
 
 Для успешного запуска проекта необходимо.
 
-````
-mvn spring-boot:build-image
+````shell
+./mvnw spring-boot:build-image
 ````
 
 ````shell
