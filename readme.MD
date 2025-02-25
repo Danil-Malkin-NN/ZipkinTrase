@@ -12,11 +12,11 @@ docker run -d -p 9411:9411 openzipkin/zipkin-slim
 ````
 
 ````shell
-docker compose -f docker-compose-cashe.yaml up 
+docker compose -f docker-compose.yaml up 
 ````
 
 ````shell
-docker compose -f docker-compose-cashe.yaml down 
+docker compose -f docker-compose.yaml down 
 ````
 
 
