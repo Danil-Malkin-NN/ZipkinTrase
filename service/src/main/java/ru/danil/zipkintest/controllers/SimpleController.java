@@ -26,7 +26,7 @@ public class SimpleController {
     }
 
 
-    @GetMapping("")
+    @GetMapping("name")
     public String getName() {
         return name + " " + simpleApi.map(SimpleApi::getName)
                 .orElse("end");

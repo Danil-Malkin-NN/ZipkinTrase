@@ -10,7 +10,7 @@ import org.springframework.web.bind.annotation.GetMapping;
 public interface SimpleApi {
 
     @Cacheable(value = "name")
-    @GetMapping
+    @GetMapping("name")
     String getName();
 
 }
